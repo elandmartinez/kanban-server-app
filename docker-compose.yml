@@ -21,11 +21,13 @@ services:
   mysql:
     image: mysql:5
     environment:
-      - MYSQL_DB=my_store
+      - MYSQL_DATABASE=kanban-db
       - MYSQL_ROOT_PASSWORD=admin123
-      - MYSQL_PORT=3307
+      - MYSQL_USERNAME=eland
+      - MYSQL_PASSWORD=admin123
+      - MYSQL_PORT=3306
     ports:
-      - 3307:3307
+      - 3306:3306
     volumes:
     - ./mysql_data:/var/lib/mysql
 
@@ -34,5 +36,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=admin123
       - PMA_HOST=mysql
+      - PMA_PORT=3306
     ports:
       - 8081:80

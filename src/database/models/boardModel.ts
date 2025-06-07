@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 export const BOARD_TABLE_NAME = "boards"
 const BOARD_MODEL_NAME = "Board"
@@ -28,7 +28,20 @@ export const boardSchema = {
   },
 }
 
-export class BoardModel extends Model {
+export interface BoardAttributes {
+  id: string,
+  name: string
+}
+
+export interface BoardCreationAttributes extends Optional<BoardAttributes, 'id'> {}
+
+export class BoardModel extends Model<BoardAttributes, BoardCreationAttributes> implements BoardAttributes {
+  public id!: string;
+  public name!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
   static config(sequelize: Sequelize) {
     return {
       sequelize,

@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import { TASK_STAGE_MODEL_NAME } from "./taskStageModel";
+import { TASK_STAGE_TABLE_NAME } from "./taskStageModel.js";
 export const TASKS_TABLE_NAME = "tasks";
 const TASK_MODEL_NAME = "Task";
 export const taskSchema = {
@@ -18,15 +18,15 @@ export const taskSchema = {
         allowNull: false,
     },
     subtasks: {
-        type: DataTypes.ARRAY(DataTypes.JSON),
+        type: DataTypes.JSON,
         allowNull: false,
-        defaultValue: [],
+        defaultValue: "[]",
     },
     stage: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(128),
         allowNull: false,
-        references: {
-            model: TASK_STAGE_MODEL_NAME,
+        referennces: {
+            model: TASK_STAGE_TABLE_NAME,
             key: "id"
         },
         onUpdate: "CASCADE",
@@ -36,19 +36,19 @@ export const taskSchema = {
         allowNull: false,
         type: DataTypes.DATE,
         field: 'created_at',
-        defaultValue: new Date("YY-MM-dd")
+        defaultValue: DataTypes.NOW
     },
     updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
         field: 'updated_at',
-        defaultValue: new Date("YY-MM-dd")
+        defaultValue: DataTypes.NOW
     },
 };
 export class TaskModel extends Model {
     static associate(sequelize) {
         this.belongsTo(sequelize.models.TaskStage, {
-            as: "task"
+            as: TASK_STAGE_TABLE_NAME
         });
     }
     static config(sequelize) {

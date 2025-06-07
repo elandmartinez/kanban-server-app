@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize } from "sequelize"
+import { Model, DataTypes, Sequelize, Optional } from "sequelize"
 import { TASK_STAGE_TABLE_NAME } from "./taskStageModel.js"
 
 export const TASKS_TABLE_NAME = "tasks"
@@ -48,7 +48,26 @@ export const taskSchema = {
   },
 }
 
-export class TaskModel extends Model {
+export interface TaskAttributes {
+  id: string;
+  title: string;
+  description: string;
+  subtasks: string[];
+  stage: string;
+}
+
+export interface TaskCreationAttributes extends Optional<TaskAttributes, 'id'> {}
+
+export class TaskModel extends Model<TaskAttributes, TaskCreationAttributes> implements TaskAttributes {
+  public id!: string;
+  public title!: string;
+  public description!: string;
+  public subtasks!: string[];
+  public stage!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
   static associate (sequelize: Sequelize) {
     this.belongsTo(sequelize.models.TaskStage, {
       as: TASK_STAGE_TABLE_NAME

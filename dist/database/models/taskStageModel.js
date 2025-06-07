@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
-import { BOARD_MODEL_NAME } from "./boardModel";
-const TASK_STAGE_TABLE_NAME = "task_stages";
+import { BOARD_TABLE_NAME } from "./boardModel.js";
+export const TASK_STAGE_TABLE_NAME = "task_stages";
 export const TASK_STAGE_MODEL_NAME = "TaskStage";
 export const taskStageSchema = {
     id: {
@@ -14,10 +14,10 @@ export const taskStageSchema = {
         unique: true
     },
     board: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(128),
         allowNull: false,
         references: {
-            model: BOARD_MODEL_NAME,
+            model: BOARD_TABLE_NAME,
             key: "id"
         },
         onUpdate: "CASCADE",
@@ -27,19 +27,19 @@ export const taskStageSchema = {
         allowNull: false,
         type: DataTypes.DATE,
         field: 'created_at',
-        defaultValue: new Date("YY-MM-dd")
+        defaultValue: DataTypes.NOW
     },
     updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
         field: 'updated_at',
-        defaultValue: new Date("YY-MM-dd")
+        defaultValue: DataTypes.NOW
     },
 };
 export class TaskStageModel extends Model {
     static associate(sequelize) {
         this.belongsTo(sequelize.models.Board, {
-            as: "taskStage"
+            as: BOARD_TABLE_NAME
         });
     }
     static config(sequelize) {

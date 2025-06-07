@@ -1,7 +1,7 @@
-import { taskSchema, TaskModel } from "./taskModel";
-import { taskStageSchema, TaskStageModel } from "./taskStageModel";
-import { boardSchema, BoardModel } from "./boardModel";
-import { userSchema, UserModel } from "./userModel";
+import { taskSchema, TaskModel } from "./taskModel.js";
+import { taskStageSchema, TaskStageModel } from "./taskStageModel.js";
+import { boardSchema, BoardModel } from "./boardModel.js";
+import { userSchema, UserModel } from "./userModel.js";
 export function setUpModels(sequelize) {
     TaskModel.init(taskSchema, TaskModel.config(sequelize));
     TaskStageModel.init(taskStageSchema, TaskStageModel.config(sequelize));

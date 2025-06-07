@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-export const USER_MODEL_NAME = "User";
+const USER_MODEL_NAME = "User";
 const USER_TABLE_NAME = "users";
 export const userSchema = {
     id: {
@@ -26,20 +26,17 @@ export const userSchema = {
         type: DataTypes.DATE,
         field: "created_at",
         alloNull: false,
-        defaultValue: new Date("YY-MM-dd")
+        defaultValue: DataTypes.NOW
     },
     updatedAt: {
         type: DataTypes.DATE,
         field: "updated_at",
         alloNull: false,
-        defaultValue: new Date("YY-MM-dd")
+        defaultValue: DataTypes.NOW
     }
 };
 export class UserModel extends Model {
     static associate(sequelize) {
-        this.belongsTo(sequelize.models.Board, {
-            as: "board"
-        });
     }
     static config(sequelize) {
         return {

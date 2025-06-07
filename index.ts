@@ -1,6 +1,7 @@
 // src/app.ts
 import express from 'express';
 import sequelize from './src/libs/sequelize.js';
+import routerApi from "./src/routes/index.js"
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Welcome to the Sequelize App!');
 });
+
+routerApi(app)
 
 // Function to connect to DB and sync models
 async function connectDBAndSync() {

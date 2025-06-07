@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
-const BOARD_TABLE_NAME = "boards";
-export const BOARD_MODEL_NAME = "Board";
+export const BOARD_TABLE_NAME = "boards";
+const BOARD_MODEL_NAME = "Board";
 export const boardSchema = {
     id: {
         type: new DataTypes.STRING(128),
@@ -16,13 +16,13 @@ export const boardSchema = {
         type: DataTypes.DATE,
         field: "created_at",
         alloNull: false,
-        defaultValue: new Date("YY-MM-dd")
+        defaultValue: DataTypes.NOW
     },
     updatedAt: {
         type: DataTypes.DATE,
         field: "updated_at",
         alloNull: false,
-        defaultValue: new Date("YY-MM-dd")
+        defaultValue: DataTypes.NOW
     },
 };
 export class BoardModel extends Model {

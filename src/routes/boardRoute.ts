@@ -1,6 +1,7 @@
 import express from "express";
 import BoardService from "../services/boardService.js";
-import { getBoardSchema, createBoardSchema } from "../schemas/boardSchema";
+import { getBoardSchema, createBoardSchema } from "../schemas/boardSchema.js";
+import scehmaValidator from "../middlewares/schemaValidator.js";
 
 export const boardRouter = express.Router();
 const service = new BoardService();
@@ -18,7 +19,9 @@ boardRouter.get("/get", async (req, res) => {
   }
 });
 
-boardRouter.get("/get-one/:id", async (req, res) => {
+boardRouter.get("/get-one/:id",
+  scehmaValidator(getBoardSchema, "params"),
+  async (req, res) => {
   const { id: boardId } = req.params;
   try {
     const response = await service.getBoardById(boardId);
@@ -35,7 +38,9 @@ boardRouter.get("/get-one/:id", async (req, res) => {
   }
 });
 
-boardRouter.post("/create-one/:id", async (req, res) => {
+boardRouter.post("/create-one/",
+  scehmaValidator(createBoardSchema, "body"),
+  async (req, res) => {
   const newBoardData = req.body;
   try {
     const response = await service.createBoard(newBoardData);

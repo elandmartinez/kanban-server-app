@@ -1,4 +1,4 @@
-import { DataTypes, Model, Sequelize } from "sequelize"
+import { DataTypes, Model, Optional, Sequelize } from "sequelize"
 
 const USER_MODEL_NAME = "User"
 const USER_TABLE_NAME = "users"
@@ -38,7 +38,21 @@ export const userSchema = {
   }
 }
 
+export interface UserAttributtes {
+  id: string,
+  name: string,
+  email: string,
+  password: string
+}
+
+export interface UserCreationAttributtes extends Optional<UserAttributtes, 'id'> {}
+
 export class UserModel extends Model {
+  public id!: string
+  public name!: string
+  public email!: string
+  public password!: string
+
   static associate (sequelize: Sequelize) {
 
   }

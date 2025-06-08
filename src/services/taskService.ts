@@ -1,17 +1,16 @@
-import sequelize from '../libs/sequelize';
-import { TaskModel, TaskCreationAttributes, TaskAttributes } from '../database/models/taskModel';
+import sequelize from '../libs/sequelize.js';
+import {
+  TaskModel,
+  TaskAttributes,
+  TaskCreationAttributes,
+} from '../database/models/taskModel.js';
 
-const taskModel = sequelize.models.Task as typeof TaskModel
+// Get the strongly typed model from Sequelize's registry
+const taskModel = sequelize.models.Task as typeof TaskModel;
 
-// Define input type for creating a new task
-interface CreateTaskInput {
-  title: string;
-  description: string;
-  subtasks: string[];
-  stage: string;
-}
+// Input types
+interface CreateTaskInput extends TaskCreationAttributes {}
 
-// Define input type for updating a task (partial, but `id` required)
 interface UpdateTaskInput {
   id: string;
   title?: string;
@@ -28,6 +27,16 @@ class TasksService {
     } catch (error) {
       console.error('Error creating task:', error);
       throw new Error('Failed to create task');
+    }
+  }
+
+  async getTasks(): Promise<TaskModel[]> {
+    try {
+      const tasks = await taskModel.findAll();
+      return tasks;
+    } catch (error) {
+      console.error('Error fetching all tasks:', error);
+      throw new Error('Failed to fetch all tasks');
     }
   }
 
@@ -73,6 +82,5 @@ class TasksService {
     }
   }
 }
-
 
 export default TasksService;

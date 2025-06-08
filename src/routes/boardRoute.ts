@@ -2,36 +2,82 @@ import express from "express";
 import BoardService from "../services/boardService.js";
 import { getBoardSchema, createBoardSchema } from "../schemas/boardSchema";
 
-export const boardRouter = express.Router()
-const service = new BoardService()
+export const boardRouter = express.Router();
+const service = new BoardService();
 
-boardRouter.post("/board", async (req, res) => {
-  const boardData = req.body
+boardRouter.get("/get", async (req, res) => {
+  try {
+    const response = await service.getBoards();
+    return res.status(200).json({
+      message: "Boards fetched successfully",
+      data: response,
+    });
+  } catch (error) {
+    console.error("Error fetching boards:", error);
+    return res.status(500).json({ message: "Failed to fetch boards" });
+  }
+});
 
-  const response = await service.createBoard(boardData)
+boardRouter.get("/get-one/:id", async (req, res) => {
+  const { id: boardId } = req.params;
+  try {
+    const response = await service.getBoardById(boardId);
+    if (!response) {
+      return res.status(404).json({ message: `Board ${boardId} not found` });
+    }
+    return res.status(200).json({
+      message: `Board ${boardId}`,
+      data: response,
+    });
+  } catch (error) {
+    console.error(`Error fetching board ${boardId}:`, error);
+    return res.status(500).json({ message: "Failed to fetch board" });
+  }
+});
 
-  return res.status(200).json({
-    message: "Board created",
-    data: response
-  })
-})
+boardRouter.post("/create-one/:id", async (req, res) => {
+  const newBoardData = req.body;
+  try {
+    const response = await service.createBoard(newBoardData);
+    return res.status(201).json({
+      message: "Board created successfully",
+      data: response,
+    });
+  } catch (error) {
+    console.error("Error creating board:", error);
+    return res.status(500).json({ message: "Failed to create board" });
+  }
+});
 
-boardRouter.get("/", async (req, res) => {
-  const response = await service.getBoards()
-  return res.status(200).json({
-    message: "Boards fetchede successfully",
-    data: response
-  })
-})
+boardRouter.patch("/update-one/:id", async (req, res) => {
+  const newBoardData = req.body;
+  try {
+    const response = await service.updateBoard(newBoardData);
+    if (!response) {
+      return res.status(404).json({ message: "Board not found for update" });
+    }
+    return res.status(200).json({
+      message: "Board updated successfully",
+      data: response,
+    });
+  } catch (error) {
+    console.error("Error updating board:", error);
+    return res.status(500).json({ message: "Failed to update board" });
+  }
+});
 
-boardRouter.get("/board/:id", async (req, res) => {
-  const { id: boardId } = req.params
-
-  const response = await service.getBoardById(boardId)
-
-  return res.status(200).json({
-    message: `Board ${boardId}`,
-    data: response
-  })
-})
-
+boardRouter.delete("/delete-one/:id", async (req, res) => {
+  const { id: boardId } = req.params;
+  try {
+    const response = await service.deleteBoard(boardId);
+    if (!response) {
+      return res.status(404).json({ message: `Board ${boardId} not found` });
+    }
+    return res.status(200).json({
+      message: `Board ${boardId} deleted successfully`,
+    });
+  } catch (error) {
+    console.error(`Error deleting board ${boardId}:`, error);
+    return res.status(500).json({ message: "Failed to delete board" });
+  }
+});

@@ -1,8 +1,8 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 import { BOARD_TABLE_NAME } from "./boardModel.js";
 
-export const TASK_STAGE_TABLE_NAME = "task_stages"
-export const TASK_STAGE_MODEL_NAME = "TaskStage"
+export const TASK_STAGE_TABLE_NAME = "task_stages";
+const TASK_STAGE_MODEL_NAME = "TaskStage";
 
 export const taskStageSchema = {
   id: {
@@ -37,21 +37,39 @@ export const taskStageSchema = {
     field: 'updated_at',
     defaultValue: DataTypes.NOW
   },
+};
+
+export interface TaskStageAttributes {
+  id: string;
+  name: string;
+  board: string;
 }
 
-export class TaskStageModel extends Model {
-  static associate (sequelize: Sequelize) {
+export interface TaskStageCreationAttributes extends Optional<TaskStageAttributes, 'id'> {}
+
+export class TaskStageModel
+  extends Model<TaskStageAttributes, TaskStageCreationAttributes>
+  implements TaskStageAttributes {
+  public id!: string;
+  public name!: string;
+  public board!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  static associate(sequelize: Sequelize) {
     this.belongsTo(sequelize.models.Board, {
+      foreignKey: 'board',
       as: BOARD_TABLE_NAME
-    })
+    });
   }
 
-  static config (sequelize: Sequelize) {
+  static config(sequelize: Sequelize) {
     return {
       sequelize,
       tableName: TASK_STAGE_TABLE_NAME,
       modelName: TASK_STAGE_MODEL_NAME,
-      timeStamp: false
-    }
+      timestamps: false
+    };
   }
 }

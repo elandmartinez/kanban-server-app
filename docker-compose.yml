@@ -21,7 +21,7 @@ services:
   mysql:
     image: mysql:5
     environment:
-      - MYSQL_DATABASE=kanban-db
+      - MYSQL_DATABASE=kanban_db
       - MYSQL_ROOT_PASSWORD=admin123
       - MYSQL_USERNAME=eland
       - MYSQL_PASSWORD=admin123

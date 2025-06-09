@@ -59,7 +59,6 @@ export class TaskStageModel
 
   static associate(sequelize: Sequelize) {
     this.belongsTo(sequelize.models.Board, {
-      foreignKey: 'board',
       as: BOARD_TABLE_NAME
     });
   }

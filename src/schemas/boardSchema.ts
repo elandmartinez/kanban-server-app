@@ -15,7 +15,7 @@ const nameSchema = Joi.string().max(128).required().messages({
   "string.required": "the name is required"
 })
 
-export const createBoardSchema = Joi.object({ name: nameSchema })
+export const createBoardSchema = Joi.object({ id: idSchema, name: nameSchema })
 export const getBoardSchema = Joi.object({ id: idSchema })
 export const updateBoardSchema = Joi.object({ id: idSchema, name: nameSchema})
 export const deleteBoardSchema = Joi.object({ id: idSchema })

@@ -30,7 +30,7 @@ class TaskStageService {
 
   async getTaskStages(): Promise<TaskStageModel[]> {
     try {
-      const stages = await taskStageModel.findAll();
+      const stages = await taskStageModel.findAll({include: ["board"]});
       return stages;
     } catch (error) {
       console.error('Error fetching task stages:', error);

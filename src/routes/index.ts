@@ -11,6 +11,6 @@ export default function routerApi (app: express.Express) {
   app.use("/api/v1", router)
   router.use("/boards", boardRouter)
   router.use("/tasks", taskRouter)
-  router.use("/taskStages", taskStageRouter)
+  router.use("/task-stages", taskStageRouter)
   router.use("/users", userRouter)
 }

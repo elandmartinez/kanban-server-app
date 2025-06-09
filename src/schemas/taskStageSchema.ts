@@ -25,6 +25,7 @@ const boardSchema = Joi.string().max(128).messages({
 
 // Create
 export const createTaskStageSchema = Joi.object({
+  id: idSchema,
   name: nameSchema.required(),
   board: boardSchema.required(),
 });

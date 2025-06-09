@@ -36,6 +36,7 @@ const subtasksSchema = Joi.array()
 
 // Task Create Schema
 export const createTaskSchema = Joi.object({
+  id: idSchema,
   title: titleSchema,
   description: descriptionSchema,
   subtasks: subtasksSchema,

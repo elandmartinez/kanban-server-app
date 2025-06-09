@@ -1,12 +1,12 @@
 import express from "express";
-import TasksService from "../services/taskService";
+import TasksService from "../services/taskService.js";
 import {
   createTaskSchema,
   getTaskSchema,
   updateTaskSchema,
   deleteTaskSchema
-} from "../schemas/taskSchema";
-import schemaValidator from "../middlewares/schemaValidator";
+} from "../schemas/taskSchema.js";
+import schemaValidator from "../middlewares/schemaValidator.js";
 
 export const taskRouter = express.Router();
 const service = new TasksService();
@@ -67,15 +67,13 @@ taskRouter.patch("/update-one/",
   schemaValidator(updateTaskSchema, "body"),
   async (req, res) => {
   try {
-    const newTaskData = { ...req.body };
-    delete newTaskData.id
-    const { taskId } = req.body
+    const newTaskData = req.body;
     const updatedTask = await service.updateTask(newTaskData);
     if (!updatedTask) {
-      return res.status(404).json({ message: `Task ${taskId} not found` });
+      return res.status(404).json({ message: `Task ${req.body.id} not found` });
     }
     return res.status(200).json({
-      message: `Task ${taskId} updated successfully`,
+      message: `Task ${newTaskData.id} updated successfully`,
       data: updatedTask,
     });
   } catch (error) {

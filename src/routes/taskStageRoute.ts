@@ -1,5 +1,12 @@
 import express from "express";
 import TaskStageService from "../services/taskStageService.js";
+import {
+  getTaskStageSchema,
+  createTaskStageSchema,
+  updateTaskStageSchema,
+  deleteTaskStageSchema
+} from "../schemas/taskStageSchema.js";
+import schemaValidator from "../middlewares/schemaValidator.js";
 
 export const taskStageRouter = express.Router();
 const service = new TaskStageService();
@@ -19,7 +26,9 @@ taskStageRouter.get("/get", async (req, res) => {
 });
 
 // GET one task stage by ID
-taskStageRouter.get("/get-one/:id", async (req, res) => {
+taskStageRouter.get("/get-one/:id",
+  schemaValidator(getTaskStageSchema, "params"),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const stage = await service.getTaskStageById(id);
@@ -37,7 +46,9 @@ taskStageRouter.get("/get-one/:id", async (req, res) => {
 });
 
 // CREATE one task stage
-taskStageRouter.post("/create-one", async (req, res) => {
+taskStageRouter.post("/create-one",
+  schemaValidator(createTaskStageSchema, "body"),
+  async (req, res) => {
   try {
     const newStageData = req.body;
     const createdStage = await service.createTaskStage(newStageData);
@@ -52,10 +63,12 @@ taskStageRouter.post("/create-one", async (req, res) => {
 });
 
 // UPDATE one task stage
-taskStageRouter.patch("/update-one/:id", async (req, res) => {
+taskStageRouter.patch("/update-one",
+  schemaValidator(updateTaskStageSchema, "body"),
+  async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedData = { ...req.body, id };
+    const updatedData = req.body;
     const updatedStage = await service.updateTaskStage(updatedData);
     if (!updatedStage) {
       return res.status(404).json({ message: `Task stage ${id} not found` });
@@ -71,7 +84,9 @@ taskStageRouter.patch("/update-one/:id", async (req, res) => {
 });
 
 // DELETE one task stage
-taskStageRouter.delete("/delete-one/:id", async (req, res) => {
+taskStageRouter.delete("/delete-one/:id",
+  schemaValidator(deleteTaskStageSchema, "params"),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await service.deleteTaskStage(id);

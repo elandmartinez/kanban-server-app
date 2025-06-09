@@ -14,7 +14,5 @@ export default function schemaValidator (schema: Joi.ObjectSchema, requestProper
       throw new Error("The data doesn't match this endpoint data schema")
     }
     next()
-
-    next()
   }
 }

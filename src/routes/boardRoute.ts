@@ -55,15 +55,19 @@ boardRouter.post("/create-one/",
   }
 });
 
-boardRouter.patch("/update-one/:id",
-  schemaValidator(updateBoardSchema, "params"),
+boardRouter.patch("/update-one",
+  schemaValidator(updateBoardSchema, "body"),
   async (req, res) => {
   const newBoardData = req.body;
   try {
     const response = await service.updateBoard(newBoardData);
+    console.log({response})
+
     if (!response) {
+      console.log("board was not found")
       return res.status(404).json({ message: "Board not found for update" });
     }
+    console.log("Board was found")
     return res.status(200).json({
       message: "Board updated successfully",
       data: response,

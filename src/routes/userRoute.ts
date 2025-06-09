@@ -1,11 +1,19 @@
 import express from "express";
 import UserService from "../services/userService.js";
+import {
+  getUserSchema,
+  createUserSchema,
+  updateUserSchema,
+  deleteUserSchema
+} from "../schemas/userSchema.js";
+import schemaValidator from "../middlewares/schemaValidator.js";
 
 export const userRouter = express.Router();
 const service = new UserService();
 
 // GET all users
-userRouter.get("/get", async (req, res) => {
+userRouter.get("/get",
+  async (req, res) => {
   try {
     const users = await service.getUsers();
     return res.status(200).json({
@@ -19,7 +27,9 @@ userRouter.get("/get", async (req, res) => {
 });
 
 // GET one user by ID
-userRouter.get("/get-one/:id", async (req, res) => {
+userRouter.get("/get-one/:id",
+  schemaValidator(getUserSchema, "params"),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const user = await service.getUserById(id);
@@ -37,7 +47,9 @@ userRouter.get("/get-one/:id", async (req, res) => {
 });
 
 // CREATE one user
-userRouter.post("/create-one", async (req, res) => {
+userRouter.post("/create-one",
+  schemaValidator(createUserSchema, "body"),
+  async (req, res) => {
   try {
     const newUserData = req.body;
     const createdUser = await service.createUser(newUserData);
@@ -52,16 +64,17 @@ userRouter.post("/create-one", async (req, res) => {
 });
 
 // UPDATE one user
-userRouter.patch("/update-one/:id", async (req, res) => {
+userRouter.patch("/update-one",
+  schemaValidator(updateUserSchema, "params"),
+  async (req, res) => {
   try {
-    const { id } = req.params;
-    const updateUserData = { ...req.body, id };
+    const updateUserData = req.body;
     const updatedUser = await service.updateUser(updateUserData);
     if (!updatedUser) {
-      return res.status(404).json({ message: `User ${id} not found` });
+      return res.status(404).json({ message: `User ${req.body.id} coudl not be updated` });
     }
     return res.status(200).json({
-      message: `User ${id} updated successfully`,
+      message: `User ${updateUserData.id} updated successfully`,
       data: updatedUser,
     });
   } catch (error) {
@@ -71,7 +84,9 @@ userRouter.patch("/update-one/:id", async (req, res) => {
 });
 
 // DELETE one user
-userRouter.delete("/delete-one/:id", async (req, res) => {
+userRouter.delete("/delete-one/:id",
+  schemaValidator(deleteUserSchema, "params"),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await service.deleteUser(id);

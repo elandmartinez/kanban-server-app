@@ -56,10 +56,10 @@ class TasksService {
       if (!task) return null;
 
       await task.update({
-        title: data.title,
-        description: data.description,
-        subtasks: data.subtasks,
-        stage: data.stage,
+        title: data.title || task.title,
+        description: data.description || task.description,
+        subtasks: data.subtasks || task.subtasks,
+        stage: data.stage || task.stage,
       });
 
       return task;

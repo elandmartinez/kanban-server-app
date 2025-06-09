@@ -1,12 +1,13 @@
 import express from "express";
 import BoardService from "../services/boardService.js";
-import { getBoardSchema, createBoardSchema } from "../schemas/boardSchema.js";
-import scehmaValidator from "../middlewares/schemaValidator.js";
+import { getBoardSchema, createBoardSchema, updateBoardSchema, deleteBoardSchema, } from "../schemas/boardSchema.js";
+import schemaValidator from "../middlewares/schemaValidator.js";
 
 export const boardRouter = express.Router();
 const service = new BoardService();
 
-boardRouter.get("/get", async (req, res) => {
+boardRouter.get("/get",
+  async (req, res) => {
   try {
     const response = await service.getBoards();
     return res.status(200).json({
@@ -20,7 +21,7 @@ boardRouter.get("/get", async (req, res) => {
 });
 
 boardRouter.get("/get-one/:id",
-  scehmaValidator(getBoardSchema, "params"),
+  schemaValidator(getBoardSchema, "params"),
   async (req, res) => {
   const { id: boardId } = req.params;
   try {
@@ -39,7 +40,7 @@ boardRouter.get("/get-one/:id",
 });
 
 boardRouter.post("/create-one/",
-  scehmaValidator(createBoardSchema, "body"),
+  schemaValidator(createBoardSchema, "body"),
   async (req, res) => {
   const newBoardData = req.body;
   try {
@@ -54,7 +55,9 @@ boardRouter.post("/create-one/",
   }
 });
 
-boardRouter.patch("/update-one/:id", async (req, res) => {
+boardRouter.patch("/update-one/:id",
+  schemaValidator(updateBoardSchema, "params"),
+  async (req, res) => {
   const newBoardData = req.body;
   try {
     const response = await service.updateBoard(newBoardData);
@@ -71,7 +74,9 @@ boardRouter.patch("/update-one/:id", async (req, res) => {
   }
 });
 
-boardRouter.delete("/delete-one/:id", async (req, res) => {
+boardRouter.delete("/delete-one/:id",
+  schemaValidator(deleteBoardSchema, "params"),
+  async (req, res) => {
   const { id: boardId } = req.params;
   try {
     const response = await service.deleteBoard(boardId);

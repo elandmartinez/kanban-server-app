@@ -1,8 +1,7 @@
-import Boom from "@hapi/boom";
 import { NextFunction, Request, Response } from "express"
 import Joi from "joi"
 
-export default function (schema: Joi.ObjectSchema, requestProperty: string) {
+export default function schemaValidator (schema: Joi.ObjectSchema, requestProperty: string) {
   console.log("Middleware here")
   return (req: Request, res: Response, next: NextFunction) => {
     let dataToValidate;

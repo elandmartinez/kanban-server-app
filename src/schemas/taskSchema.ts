@@ -21,7 +21,7 @@ const descriptionSchema = Joi.string().max(512).messages({
   "any.required": "Task description is required",
 });
 
-const stageSchema = Joi.string().messages({
+const taskStageIdSchema = Joi.string().messages({
   "string.base": "Stage must be a string",
   "any.required": "Stage is required",
 });
@@ -40,7 +40,7 @@ export const createTaskSchema = Joi.object({
   title: titleSchema,
   description: descriptionSchema,
   subtasks: subtasksSchema,
-  stage: stageSchema,
+  taskStageId: taskStageIdSchema,
 });
 
 // Task Get Schema (e.g., to get a task by ID)
@@ -54,7 +54,7 @@ export const updateTaskSchema = Joi.object({
   title: titleSchema.optional(),
   description: descriptionSchema.optional(),
   subtasks: subtasksSchema.optional(),
-  stage: stageSchema.optional(),
+  taskStageId: taskStageIdSchema.optional(),
 });
 
 // Task Delete Schema
@@ -68,5 +68,5 @@ export interface Task {
   title: string;
   description: string;
   subtasks: string[];
-  stage: string;
+  taskStageId: string;
 }

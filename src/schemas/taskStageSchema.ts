@@ -27,7 +27,7 @@ const boardSchema = Joi.string().max(128).messages({
 export const createTaskStageSchema = Joi.object({
   id: idSchema,
   name: nameSchema.required(),
-  board: boardSchema.required(),
+  boardId: boardSchema.required(),
 });
 
 // Read (e.g., get by ID)
@@ -39,7 +39,7 @@ export const getTaskStageSchema = Joi.object({
 export const updateTaskStageSchema = Joi.object({
   id: idSchema,
   name: nameSchema,
-  board: boardSchema,
+  boardId: boardSchema,
 });
 
 // Delete

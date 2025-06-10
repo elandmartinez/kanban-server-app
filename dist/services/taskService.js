@@ -1,4 +1,5 @@
-import sequelize from '../libs/sequelize';
+import sequelize from '../libs/sequelize.js';
+// Get the strongly typed model from Sequelize's registry
 const taskModel = sequelize.models.Task;
 class TasksService {
     async createTask(data) {
@@ -9,6 +10,16 @@ class TasksService {
         catch (error) {
             console.error('Error creating task:', error);
             throw new Error('Failed to create task');
+        }
+    }
+    async getTasks() {
+        try {
+            const tasks = await taskModel.findAll();
+            return tasks;
+        }
+        catch (error) {
+            console.error('Error fetching all tasks:', error);
+            throw new Error('Failed to fetch all tasks');
         }
     }
     async getTaskById(id) {
@@ -27,10 +38,10 @@ class TasksService {
             if (!task)
                 return null;
             await task.update({
-                title: data.title,
-                description: data.description,
-                subtasks: data.subtasks,
-                stage: data.stage,
+                title: data.title || task.title,
+                description: data.description || task.description,
+                subtasks: data.subtasks || task.subtasks,
+                taskStageId: data.stage || task.taskStageId,
             });
             return task;
         }

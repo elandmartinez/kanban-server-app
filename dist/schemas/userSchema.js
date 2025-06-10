@@ -25,6 +25,7 @@ const passwordSchema = Joi.string().min(6).max(128).messages({
 // --- CRUD Schemas ---
 // Create
 export const createUserSchema = Joi.object({
+    id: idSchema,
     name: nameSchema.required(),
     email: emailSchema.required(),
     password: passwordSchema.required(),

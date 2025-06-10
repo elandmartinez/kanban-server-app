@@ -1,4 +1,5 @@
 import { Model, DataTypes } from "sequelize";
+import { TASK_STAGE_TABLE_NAME } from "./taskStageModel.js";
 export const BOARD_TABLE_NAME = "boards";
 const BOARD_MODEL_NAME = "Board";
 export const boardSchema = {
@@ -26,6 +27,9 @@ export const boardSchema = {
     },
 };
 export class BoardModel extends Model {
+    static associate(sequelize) {
+        this.hasMany(sequelize.models.TaskStages, { as: TASK_STAGE_TABLE_NAME, foreignKey: "board_id" });
+    }
     static config(sequelize) {
         return {
             sequelize,

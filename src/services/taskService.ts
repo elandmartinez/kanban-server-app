@@ -59,7 +59,7 @@ class TasksService {
         title: data.title || task.title,
         description: data.description || task.description,
         subtasks: data.subtasks || task.subtasks,
-        stage: data.stage || task.stage,
+        taskStageId: data.stage || task.taskStageId,
       });
 
       return task;

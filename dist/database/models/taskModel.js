@@ -18,17 +18,18 @@ export const taskSchema = {
         allowNull: false,
     },
     subtasks: {
-        type: DataTypes.JSON,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
-        defaultValue: "[]",
+        defaultValue: [],
     },
-    stage: {
+    taskStageId: {
         type: DataTypes.STRING(128),
         allowNull: false,
-        referennces: {
+        references: {
             model: TASK_STAGE_TABLE_NAME,
             key: "id"
         },
+        field: "task_stage_id",
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     },

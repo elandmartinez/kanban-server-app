@@ -22,15 +22,16 @@ export const taskSchema = {
   subtasks: {
     type: DataTypes.JSON,
     allowNull: false,
-    defaultValue: "[]",
+    defaultValue: [],
   },
-  stage: {
+  taskStageId: {
     type: DataTypes.STRING(128),
     allowNull: false,
-    referennces: {
+    references: {
       model: TASK_STAGE_TABLE_NAME,
       key: "id"
     },
+    field: "task_stage_id",
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   },
@@ -53,7 +54,7 @@ export interface TaskAttributes {
   title: string;
   description: string;
   subtasks: string[];
-  stage: string;
+  taskStageId: string;
 }
 
 export interface TaskCreationAttributes extends Optional<TaskAttributes, 'id'> {}
@@ -63,10 +64,11 @@ export class TaskModel extends Model<TaskAttributes, TaskCreationAttributes> imp
   public title!: string;
   public description!: string;
   public subtasks!: string[];
-  public stage!: string;
+  public taskStageId!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
 
   static associate (sequelize: Sequelize) {
     this.belongsTo(sequelize.models.TaskStage, {

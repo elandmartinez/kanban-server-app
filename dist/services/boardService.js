@@ -1,4 +1,4 @@
-import sequelize from '../libs/sequelize';
+import sequelize from '../libs/sequelize.js';
 // Get the strongly typed model from Sequelize's registry
 const boardModel = sequelize.models.Board;
 class BoardService {
@@ -10,6 +10,16 @@ class BoardService {
         catch (error) {
             console.error('Error creating board:', error);
             throw new Error('Failed to create board');
+        }
+    }
+    async getBoards() {
+        try {
+            const boards = await boardModel.findAll();
+            return boards;
+        }
+        catch (error) {
+            console.error("Error fetching all the boards", error);
+            throw new Error("Failed to fetch all boards");
         }
     }
     async getBoardById(id) {

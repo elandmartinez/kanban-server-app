@@ -1,7 +1,6 @@
 import sequelize from '../libs/sequelize.js';
 import {
   TaskStageModel,
-  TaskStageAttributes,
   TaskStageCreationAttributes
 } from '../database/models/taskStageModel.js';
 
@@ -30,7 +29,7 @@ class TaskStageService {
 
   async getTaskStages(): Promise<TaskStageModel[]> {
     try {
-      const stages = await taskStageModel.findAll({include: ["board"]});
+      const stages = await taskStageModel.findAll({ include: "Board" });
       return stages;
     } catch (error) {
       console.error('Error fetching task stages:', error);
@@ -55,7 +54,7 @@ class TaskStageService {
 
       await stage.update({
         name: data.name,
-        board: data.board
+        boardId: data.board
       });
 
       return stage;

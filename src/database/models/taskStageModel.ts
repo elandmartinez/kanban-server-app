@@ -59,7 +59,7 @@ export class TaskStageModel
   public readonly updatedAt!: Date;
 
   static associate(sequelize: Sequelize) {
-    this.belongsTo(sequelize.models.Board, { as: BOARD_MODEL_NAME })
+    this.belongsTo(sequelize.models.Board, { foreignKey: "boardId" })
   }
 
   static config(sequelize: Sequelize) {

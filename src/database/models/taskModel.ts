@@ -71,9 +71,7 @@ export class TaskModel extends Model<TaskAttributes, TaskCreationAttributes> imp
 
 
   static associate (sequelize: Sequelize) {
-    this.belongsTo(sequelize.models.TaskStage, {
-      as: TASK_STAGE_MODEL_NAME
-    })
+    this.belongsTo(sequelize.models.TaskStage, { foreignKey: "taskStageId" })
   }
 
   static config (sequelize: Sequelize) {

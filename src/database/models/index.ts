@@ -10,7 +10,6 @@ export function setUpModels (sequelize: Sequelize) {
   TaskModel.init(taskSchema, TaskModel.config(sequelize))
   UserModel.init(userSchema, UserModel.config(sequelize))
 
-  BoardModel.associate(sequelize)
   TaskStageModel.associate(sequelize)
   TaskModel.associate(sequelize)
   UserModel.associate(sequelize)

@@ -1,8 +1,8 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize"
-import { TASK_STAGE_TABLE_NAME } from "./taskStageModel.js"
+import { TASK_STAGE_MODEL_NAME, TASK_STAGE_TABLE_NAME } from "./taskStageModel.js"
 
 export const TASKS_TABLE_NAME = "tasks"
-const TASK_MODEL_NAME = "Task"
+export const TASK_MODEL_NAME = "Task"
 
 export const taskSchema = {
   id: {
@@ -72,7 +72,7 @@ export class TaskModel extends Model<TaskAttributes, TaskCreationAttributes> imp
 
   static associate (sequelize: Sequelize) {
     this.belongsTo(sequelize.models.TaskStage, {
-      as: TASK_STAGE_TABLE_NAME
+      as: TASK_STAGE_MODEL_NAME
     })
   }
 

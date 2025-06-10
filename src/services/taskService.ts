@@ -32,7 +32,7 @@ class TasksService {
 
   async getTasks(): Promise<TaskModel[]> {
     try {
-      const tasks = await taskModel.findAll();
+      const tasks = await taskModel.findAll({ include: "TaskStage"});
       return tasks;
     } catch (error) {
       console.error('Error fetching all tasks:', error);

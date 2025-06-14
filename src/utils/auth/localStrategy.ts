@@ -1,7 +1,7 @@
 import { unauthorized } from "@hapi/boom";
 import UserService from "../../services/userService";
 import { Strategy as LocalStrategy } from "passport-local"
-import { verifyPassword } from "../bcrypt.js";
+import { verifyPassword } from "../hooks/bcrypt.js";
 
 const userService = new UserService()
 
@@ -11,7 +11,7 @@ const localStrategy = new LocalStrategy({
   },
   async (email, password, done) => {
     try {
-      const user  = await userService.getUserById(email)
+      const user  = await userService.getUserByEmail(email)
       if (!user) done(unauthorized("Error: no user matched with that email"), false)
 
       if(user?.password) {

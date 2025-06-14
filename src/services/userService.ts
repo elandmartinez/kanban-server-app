@@ -4,6 +4,7 @@ import {
   UserAttributtes,
   UserCreationAttributtes
 } from '../database/models/userModel.js';
+import { where } from 'sequelize';
 
 // Get the strongly typed model from Sequelize's registry
 const userModel = sequelize.models.User as typeof UserModel;
@@ -38,12 +39,12 @@ class UserService {
     }
   }
 
-  async getUserById(id: string): Promise<UserModel | null> {
+  async getUserByEmail(email: string): Promise<UserModel | null> {
     try {
-      const user = await userModel.findByPk(id);
+      const user = await userModel.findOne({where: {email: email}});
       return user;
     } catch (error) {
-      console.error(`Error fetching user with id ${id}:`, error);
+      console.error(`Error fetching user with id ${email}:`, error);
       throw new Error('Failed to fetch user');
     }
   }

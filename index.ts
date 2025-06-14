@@ -1,6 +1,7 @@
 // src/app.ts
 import express from 'express';
 import sequelize from './src/libs/sequelize.js';
+import passport from 'passport';
 import routerApi from "./src/routes/index.js"
 
 const app = express();
@@ -14,7 +15,11 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Sequelize App!');
 });
 
+app.use(passport.initialize())
+
 routerApi(app)
+
+import "./src/utils/auth/index.js"
 
 // Function to connect to DB and sync models
 async function connectDBAndSync() {

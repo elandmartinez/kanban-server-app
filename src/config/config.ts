@@ -7,6 +7,7 @@ const config = {
   dbPassword: process.env.DB_PASSWORD,
   dbPort: process.env.DB_PORT,
   dbHost: process.env.DB_HOST,
+  jwtSecret: process.env.JWT_SECRET || "kanban-jwt"
 }
 
-module.exports = config;
+export default config

@@ -1,11 +1,11 @@
 import { unauthorized } from "@hapi/boom";
 import UserService from "../../services/userService";
-import { Strategy } from "passport-local"
+import { Strategy as LocalStrategy } from "passport-local"
 import { verifyPassword } from "../bcrypt.js";
 
 const userService = new UserService()
 
-const localStrategy = new Strategy({
+const localStrategy = new LocalStrategy({
     usernameField: "email",
     passwordField: "password"
   },

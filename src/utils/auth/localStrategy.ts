@@ -1,5 +1,5 @@
 import { unauthorized } from "@hapi/boom";
-import UserService from "../../services/userService";
+import UserService from "../../services/userService.js";
 import { Strategy as LocalStrategy } from "passport-local"
 import { verifyPassword } from "../hooks/bcrypt.js";
 

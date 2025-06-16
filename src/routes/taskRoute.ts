@@ -15,13 +15,13 @@ const service = new TasksService();
 taskRouter.get("/get", async (req, res) => {
   try {
     const tasks = await service.getTasks?.(); // if you implement getTasks()
-    return res.status(200).json({
+    res.status(200).json({
       message: "Tasks fetched successfully",
       data: tasks,
     });
   } catch (error) {
     console.error("Error fetching tasks:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -33,15 +33,15 @@ taskRouter.get("/get-one/:id",
     const { id } = req.params;
     const task = await service.getTaskById(id);
     if (!task) {
-      return res.status(404).json({ message: `Task ${id} not found` });
+      res.status(404).json({ message: `Task ${id} not found` });
     }
-    return res.status(200).json({
+    res.status(200).json({
       message: `Task ${id}`,
       data: task,
     });
   } catch (error) {
     console.error("Error fetching task:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -52,13 +52,13 @@ taskRouter.post("/create-one",
   try {
     const newTaskData = req.body;
     const createdTask = await service.createTask(newTaskData);
-    return res.status(201).json({
+    res.status(201).json({
       message: "Task created successfully",
       data: createdTask,
     });
   } catch (error) {
     console.error("Error creating task:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -70,15 +70,15 @@ taskRouter.patch("/update-one/",
     const newTaskData = req.body;
     const updatedTask = await service.updateTask(newTaskData);
     if (!updatedTask) {
-      return res.status(404).json({ message: `Task ${req.body.id} not found` });
+      res.status(404).json({ message: `Task ${req.body.id} not found` });
     }
-    return res.status(200).json({
+    res.status(200).json({
       message: `Task ${newTaskData.id} updated successfully`,
       data: updatedTask,
     });
   } catch (error) {
     console.error("Error updating task:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -90,13 +90,13 @@ taskRouter.delete("/delete-one/:id",
     const { id } = req.params;
     const deleted = await service.deleteTask(id);
     if (!deleted) {
-      return res.status(404).json({ message: `Task ${id} not found` });
+      res.status(404).json({ message: `Task ${id} not found` });
     }
-    return res.status(200).json({
+    res.status(200).json({
       message: `Task ${id} deleted successfully`,
     });
   } catch (error) {
     console.error("Error deleting task:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });

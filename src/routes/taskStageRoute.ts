@@ -15,13 +15,13 @@ const service = new TaskStageService();
 taskStageRouter.get("/get", async (req, res) => {
   try {
     const stages = await service.getTaskStages();
-    return res.status(200).json({
+    res.status(200).json({
       message: "Task stages fetched successfully",
       data: stages,
     });
   } catch (error) {
     console.error("Error fetching task stages:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -33,15 +33,15 @@ taskStageRouter.get("/get-one/:id",
     const { id } = req.params;
     const stage = await service.getTaskStageById(id);
     if (!stage) {
-      return res.status(404).json({ message: `Task stage ${id} not found` });
+      res.status(404).json({ message: `Task stage ${id} not found` });
     }
-    return res.status(200).json({
+    res.status(200).json({
       message: `Task stage ${id}`,
       data: stage,
     });
   } catch (error) {
     console.error("Error fetching task stage:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -52,13 +52,13 @@ taskStageRouter.post("/create-one",
   try {
     const newStageData = req.body;
     const createdStage = await service.createTaskStage(newStageData);
-    return res.status(201).json({
+    res.status(201).json({
       message: "Task stage created successfully",
       data: createdStage,
     });
   } catch (error) {
     console.error("Error creating task stage:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -71,15 +71,15 @@ taskStageRouter.patch("/update-one",
     const updatedData = req.body;
     const updatedStage = await service.updateTaskStage(updatedData);
     if (!updatedStage) {
-      return res.status(404).json({ message: `Task stage ${id} not found` });
+      res.status(404).json({ message: `Task stage ${id} not found` });
     }
-    return res.status(200).json({
+    res.status(200).json({
       message: `Task stage ${id} updated successfully`,
       data: updatedStage,
     });
   } catch (error) {
     console.error("Error updating task stage:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -91,13 +91,13 @@ taskStageRouter.delete("/delete-one/:id",
     const { id } = req.params;
     const deleted = await service.deleteTaskStage(id);
     if (!deleted) {
-      return res.status(404).json({ message: `Task stage ${id} not found` });
+      res.status(404).json({ message: `Task stage ${id} not found` });
     }
-    return res.status(200).json({
+    res.status(200).json({
       message: `Task stage ${id} deleted successfully`,
     });
   } catch (error) {
     console.error("Error deleting task stage:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });

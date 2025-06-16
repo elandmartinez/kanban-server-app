@@ -7,7 +7,7 @@ const authRouter = express.Router()
 
 const userService = new UserService()
 
-authRouter.get("/login",
+authRouter.post("/login",
   passport.authenticate("local", { session: false }),
   async (req, res) => {
     const { email } = req.body

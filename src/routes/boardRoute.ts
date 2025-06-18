@@ -3,7 +3,7 @@ import BoardService from "../services/boardService.js";
 import { getBoardSchema, createBoardSchema, updateBoardSchema, deleteBoardSchema, } from "../schemas/boardSchema.js";
 import schemaValidator from "../middlewares/schemaValidator.js";
 
-export const boardRouter = express.Router();
+const boardRouter = express.Router();
 const service = new BoardService();
 
 boardRouter.get("/get",
@@ -95,3 +95,5 @@ boardRouter.delete("/delete-one/:id",
     res.status(500).json({ message: "Failed to delete board" });
   }
 });
+
+export default boardRouter

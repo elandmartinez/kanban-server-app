@@ -1,7 +1,7 @@
 import * as express from "express";
 import passport from "passport";
-import UserService from "../services/userService";
-import { signToken } from "../utils/hooks/tokenActions";
+import UserService from "../services/userService.js";
+import { signToken } from "../utils/hooks/tokenActions.js";
 import config from "../config/config.js"
 const authRouter = express.Router()
 

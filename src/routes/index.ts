@@ -1,9 +1,10 @@
 import express from "express"
-import { boardRouter } from "./boardRoute.js"
-import { taskRouter } from "./taskRoute.js"
-import { taskStageRouter } from "./taskStageRoute.js"
-import { userRouter } from "./userRoute.js"
 import passport from "passport"
+import boardRouter from "./boardRoute.js"
+import taskRouter from "./taskRoute.js"
+import taskStageRouter from "./taskStageRoute.js"
+import userRouter from "./userRoute.js"
+import authRouter from "./authRoute.js"
 
 
 export default function routerApi (app: express.Express) {
@@ -24,5 +25,6 @@ export default function routerApi (app: express.Express) {
     passport.authenticate("jwt", {session: false}),
     taskStageRouter
   )
+  router.use("/auth", authRouter)
   router.use("/users", userRouter)
 }

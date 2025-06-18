@@ -8,7 +8,7 @@ import {
 } from "../schemas/userSchema.js";
 import schemaValidator from "../middlewares/schemaValidator.js";
 
-export const userRouter = express.Router();
+const userRouter = express.Router();
 const service = new UserService();
 
 // GET all users
@@ -101,3 +101,5 @@ userRouter.delete("/delete-one/:id",
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+export default userRouter

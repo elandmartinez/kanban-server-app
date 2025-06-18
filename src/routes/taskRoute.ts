@@ -8,7 +8,7 @@ import {
 } from "../schemas/taskSchema.js";
 import schemaValidator from "../middlewares/schemaValidator.js";
 
-export const taskRouter = express.Router();
+const taskRouter = express.Router();
 const service = new TasksService();
 
 // GET all tasks (optional)
@@ -100,3 +100,5 @@ taskRouter.delete("/delete-one/:id",
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+export default taskRouter

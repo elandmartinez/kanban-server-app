@@ -8,7 +8,7 @@ import {
 } from "../schemas/taskStageSchema.js";
 import schemaValidator from "../middlewares/schemaValidator.js";
 
-export const taskStageRouter = express.Router();
+const taskStageRouter = express.Router();
 const service = new TaskStageService();
 
 // GET all task stages
@@ -101,3 +101,5 @@ taskStageRouter.delete("/delete-one/:id",
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+export default taskStageRouter

@@ -6,12 +6,14 @@ import { verifyPassword } from "../hooks/bcrypt.js";
 const userService = new UserService()
 
 const localStrategy = new LocalStrategy({
-    usernameField: "email",
+    usernameField: "username",
     passwordField: "password"
   },
-  async (email, password, done) => {
+  async (username, password, done) => {
     try {
-      const user  = await userService.getUserByEmail(email)
+      console.log({ username, password })
+      const user  = await userService.getUserByEmail(username)
+      console.log("PASSED LOGIN")
       if (!user) done(unauthorized("Error: no user matched with that email"), false)
 
       if(user?.password) {
@@ -25,7 +27,7 @@ const localStrategy = new LocalStrategy({
         done(new Error("Unexpected Error: this user doesn't have a password in the database"), false)
       }
     } catch (error) {
-      const stringifiedError = JSON.stringify(error)
+      const stringifiedError = "catched error: " + JSON.stringify(error)
       done(unauthorized(stringifiedError), false)
     }
   }

@@ -40,6 +40,7 @@ class UserService {
   }
 
   async getUserByEmail(email: string): Promise<UserModel | null> {
+    console.log({ email })
     try {
       const user = await userModel.findOne({where: {email: email}});
       return user;

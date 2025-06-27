@@ -10,9 +10,9 @@ const userService = new UserService()
 authRouter.post("/login",
   passport.authenticate("local", { session: false }),
   async (req, res) => {
-    const { email } = req.body
-      const user = await userService.getUserByEmail(email)
-      const token = signToken({sub: email}, config.jwtSecret)
+    const { username } = req.body
+      const user = await userService.getUserByEmail(username)
+      const token = signToken({sub: username}, config.jwtSecret)
 
       res.status(200).json({
         data: {

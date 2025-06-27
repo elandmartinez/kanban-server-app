@@ -25,6 +25,10 @@ export default function routerApi (app: express.Express) {
     passport.authenticate("jwt", {session: false}),
     taskStageRouter
   )
-  router.use("/auth", authRouter)
+  router.use(
+    "/auth",
+    passport.authenticate("local", { session: false }),
+    authRouter
+  )
   router.use("/users", userRouter)
 }

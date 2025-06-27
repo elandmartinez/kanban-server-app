@@ -7,12 +7,14 @@ import {
   deleteUserSchema
 } from "../schemas/userSchema.js";
 import schemaValidator from "../middlewares/schemaValidator.js";
+import passport from "passport";
 
 const userRouter = express.Router();
 const service = new UserService();
 
 // GET all users
 userRouter.get("/get",
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
   try {
     const users = await service.getUsers();
@@ -28,6 +30,7 @@ userRouter.get("/get",
 
 // GET one user by ID
 userRouter.get("/get-one/:id",
+  passport.authenticate("jwt", { session: false }),
   schemaValidator(getUserSchema, "params"),
   async (req, res) => {
   try {
@@ -65,6 +68,7 @@ userRouter.post("/create-one",
 
 // UPDATE one user
 userRouter.patch("/update-one",
+  passport.authenticate("jwt", { session: false }),
   schemaValidator(updateUserSchema, "params"),
   async (req, res) => {
   try {
@@ -85,6 +89,7 @@ userRouter.patch("/update-one",
 
 // DELETE one user
 userRouter.delete("/delete-one/:id",
+  passport.authenticate("jwt", { session: false }),
   schemaValidator(deleteUserSchema, "params"),
   async (req, res) => {
   try {

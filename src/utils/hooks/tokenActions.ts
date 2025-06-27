@@ -5,5 +5,5 @@ interface TokenPayload {
 }
 
 export function signToken (payload: TokenPayload, secret: string) {
-  return jwt.sign(payload, secret)
+  return jwt.sign(payload, secret, { expiresIn: "24h" })
 }

@@ -1,0 +1,30 @@
+DELIMITER $$
+
+CREATE PROCEDURE seed_tasks()
+BEGIN
+	DECLARE i INT DEFAULT 201;
+	WHILE i <= 300 DO
+		INSERT INTO tasks (
+			id,
+            title,
+            description,
+            subtasks,
+            task_stage_id,
+            created_at,
+            updated_at
+        ) VALUES (
+			uuid(),
+            concat('task #', i),
+            concat('task #', i),
+            JSON_ARRAY('subtask c', 'subtask d'),
+            NULL,
+            NOW(),
+            NOW()
+        );
+        SET i = i+1;
+    END WHILE;
+END $$
+
+CALL seed_tasks();
+
+DROP PROCEDURE seed_tasks;
